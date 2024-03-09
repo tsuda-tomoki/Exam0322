@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BookTest {
-  private static final String TITLE_OVER_NAME =
+  private static final String OVER_STRING =
       "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
           + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
@@ -39,8 +39,26 @@ class BookTest {
   void 本タイトルの文字数が100文字を超えたとき() throws Exception {
     // assert
     assertThatThrownBy(() -> new Book(
-        "1", TITLE_OVER_NAME, "Kent Beck", "オーム社", 3080))
+        "1", OVER_STRING, "Kent Beck", "オーム社", 3080))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("本タイトルは100文字を超えてはなりません.");
+  }
+
+  @Test
+  void 著者名がnullのとき() throws Exception {
+    // assert
+    assertThatThrownBy(() -> new Book(
+        "1", "テスト駆動開発", null, "オーム社", 3080))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("著者名がnullです.");
+  }
+
+  @Test
+  void 著者名の文字数が100文字を超えたとき() throws Exception {
+    // assert
+    assertThatThrownBy(() -> new Book(
+        "1", "テスト駆動開発", OVER_STRING, "オーム社", 3080))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("著者名は100文字を超えてはなりません.");
   }
 }
