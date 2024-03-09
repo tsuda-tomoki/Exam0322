@@ -12,6 +12,15 @@ class BookTest {
     assertThatThrownBy(() -> new Book(
         null, "テスト駆動開発", "Kent Beck", "オーム社", 3080))
         .isInstanceOf(IllegalArgumentException.class)
-        .hasMessageContaining("本のidがnullです.");
+        .hasMessageContaining("本のIDがnullです.");
+  }
+
+  @Test
+  void 本IDが数字以外のとき() throws Exception {
+    // assert
+    assertThatThrownBy(() -> new Book(
+        "a", "テスト駆動開発", "Kent Beck", "オーム社", 3080))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("本のIDが数字ではありません.");
   }
 }
