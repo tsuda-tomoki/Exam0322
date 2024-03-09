@@ -79,4 +79,22 @@ class BookTest {
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("出版社名は100文字を超えてはなりません.");
   }
+
+  @Test
+  void 金額がnullのとき() throws Exception {
+    // assert
+    assertThatThrownBy(() -> new Book(
+        "1", "テスト駆動開発", "Kent Beck", "オーム社", null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("金額がnullです.");
+  }
+
+  @Test
+  void 金額がマイナスのとき() throws Exception {
+    // assert
+    assertThatThrownBy(() -> new Book(
+        "1", "テスト駆動開発", "Kent Beck", "オーム社", -10000))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("金額がマイナスです.");
+  }
 }
