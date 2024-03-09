@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AllBookResponseTest {
+class AllBooksResponseTest {
 
   @Test
   void BookオブジェクトのリストをAllBookResponseオブジェクトに変換するとき() {
@@ -21,10 +21,10 @@ class AllBookResponseTest {
         new BookResponse("2", "アジャイルサムライ", "Jonathan Rasmusson", "オーム社", 2860)
     );
 
-    AllBookResponse expected = new AllBookResponse(bookResponseList);
+    AllBooksResponse expected = new AllBooksResponse(bookResponseList);
 
     // execute
-    AllBookResponse actual = AllBookResponse.format(bookList);
+    AllBooksResponse actual = AllBooksResponse.format(bookList);
 
     // assert
     assertThat(actual).isEqualTo(expected);
