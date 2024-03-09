@@ -7,7 +7,7 @@ import static org.apache.commons.lang3.StringUtils.isNumeric;
  * 本の情報を表す Value Object.
  *
  * @param id        本のID
- * @param title     本のタイトル名
+ * @param title     本のタイトル
  * @param author    本の著者
  * @param publisher 本の出版社
  * @param price     本の金額
@@ -17,9 +17,9 @@ public record Book(String id, String title, String author, String publisher, Int
   /**
    * 本の Value Object を初期化します.
    *
-   * @param id        本のID. 1~9999999999の数字でかつ, nullであってはなりません.
-   * @param title     本のタイトル. 100文字以下でかつ, nullであってはなりません.
-   * @param author
+   * @param id        本のID. 1~9999999999の数字でかつ、nullであってはなりません.
+   * @param title     本のタイトル. 100文字以下でかつ、nullであってはなりません.
+   * @param author    本の著者. 100文字以下でかつ、nullであってはなりません.
    * @param publisher
    * @param price
    */
@@ -42,6 +42,14 @@ public record Book(String id, String title, String author, String publisher, Int
 
     if (title.length() > 100) {
       throw new IllegalArgumentException("本タイトルは100文字を超えてはなりません.");
+    }
+
+    if (isNull(author)) {
+      throw new IllegalArgumentException("著者名がnullです.");
+    }
+
+    if (author.length() > 100) {
+      throw new IllegalArgumentException("著者名は100文字を超えてはなりません.");
     }
   }
 }
