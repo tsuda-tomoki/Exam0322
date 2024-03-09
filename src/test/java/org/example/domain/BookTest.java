@@ -61,4 +61,22 @@ class BookTest {
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("著者名は100文字を超えてはなりません.");
   }
+
+  @Test
+  void 出版社名がnullのとき() throws Exception {
+    // assert
+    assertThatThrownBy(() -> new Book(
+        "1", "テスト駆動開発", "Kent Beck", null, 3080))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("出版社名がnullです.");
+  }
+
+  @Test
+  void 出版社名の文字数が100文字を超えたとき() throws Exception {
+    // assert
+    assertThatThrownBy(() -> new Book(
+        "1", "テスト駆動開発", "Kent Beck", OVER_STRING, 3080))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("出版社名は100文字を超えてはなりません.");
+  }
 }
