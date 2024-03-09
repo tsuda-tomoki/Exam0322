@@ -21,7 +21,7 @@ public record Book(String id, String title, String author, String publisher, Int
    * @param title     本のタイトル. 100文字以下でかつ、nullであってはなりません.
    * @param author    本の著者. 100文字以下でかつ、nullであってはなりません.
    * @param publisher 本の出版社. 100文字以下でかつ、nullであってはなりません.
-   * @param price
+   * @param price     本の金額. 正の値でかつ、nullであってはなりません.
    */
   public Book {
     if (isNull(id)) {
@@ -58,6 +58,14 @@ public record Book(String id, String title, String author, String publisher, Int
 
     if (publisher.length() > 100) {
       throw new IllegalArgumentException("出版社名は100文字を超えてはなりません.");
+    }
+
+    if (isNull(price)) {
+      throw new IllegalArgumentException("金額がnullです.");
+    }
+
+    if (price < 0) {
+      throw new IllegalArgumentException("金額がマイナスです.");
     }
   }
 }
