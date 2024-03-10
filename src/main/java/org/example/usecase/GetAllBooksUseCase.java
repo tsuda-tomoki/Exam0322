@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class GetAllBooksUseCase {
 
-  private BookRepository bookRepository;
+  private final BookRepository bookRepository;
 
   @Transactional(readOnly = true)
   public List<Book> findAll() {

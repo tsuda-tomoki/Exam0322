@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
  * BookRepository の実装クラス.
  * booksデータベースにアクセスします.
  */
-@Repository
 @RequiredArgsConstructor
+@Repository
 public class BookRepositoryImpl implements BookRepository {
 
   private final BookMapper bookMapper;

@@ -28,7 +28,7 @@ class BookControllerTest {
   private MockMvc mockMvc;
 
   @MockBean
-  private GetAllBooksUseCase sut;
+  private GetAllBooksUseCase getAllBooksUseCase;
 
   @BeforeEach
   void setUp() {
@@ -45,12 +45,12 @@ class BookControllerTest {
   @Test
   void GETでエンドポイントにbooksが指定された場合全件検索が実行される() throws Exception {
     // setup
-    List<Book> bookList = List.of(
+    List<Book> expected = List.of(
         new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080),
         new Book("2", "アジャイルサムライ", "Jonathan Rasmusson", "オーム社", 2860)
     );
 
-    doReturn(bookList).when(sut).findAll();
+    doReturn(expected).when(getAllBooksUseCase).findAll();
 
     mockMvc.perform(get("/v1/books"))
         .andExpect(status().isOk())

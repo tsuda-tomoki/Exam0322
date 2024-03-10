@@ -7,9 +7,9 @@ import org.example.domain.Book;
 /**
  * すべての本の情報も持つレスポンスオブジェクト.
  *
- * @param bookResponseList 本の情報を持つレスポンスオブジェクトのリスト.
+ * @param books 本の情報を持つレスポンスオブジェクトのリスト.
  */
-public record AllBooksResponse(List<BookResponse> bookResponseList) {
+public record AllBooksResponse(List<BookResponse> books) {
 
   /**
    * 本の情報を表すオブジェクトのリストをAllBooksResponseオブジェクトに変換します.
