@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: ${BOOK_DB_URL:jdbc:postgresql://localhost:5432/sample}
+    username: ${BOOK_DB_USER:user}
+    password: ${BOOK_DB_PASS_WORD:password}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
