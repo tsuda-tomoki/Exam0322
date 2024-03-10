@@ -19,5 +19,6 @@ public record BookEntity(Integer id, String title, String author, String publish
    * @return 変換されたオブジェクト
    */
   public Book convert() {
+    return new Book(String.valueOf(id), title, author, publisher, price);
   }
 }
