@@ -1,6 +1,9 @@
 package org.example.infrastructure;
 
+import static java.util.Objects.isNull;
+
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.example.domain.Book;
 import org.example.domain.entity.BookEntity;
@@ -23,5 +26,16 @@ public class BookRepositoryImpl implements BookRepository {
   @Override
   public List<Book> findAll() {
     return bookMapper.findAll().stream().map(BookEntity::convert).toList();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Optional<Book> findById(String id) {
+    if (isNull(bookMapper.findById(Integer.parseInt(id)))) {
+      return Optional.empty();
+    }
+    return Optional.of(bookMapper.findById(Integer.parseInt(id)).convert());
   }
 }
