@@ -51,4 +51,18 @@ class BookMapperTest {
     // assert
     assertThat(actual).isEqualTo(expected);
   }
+
+  @Test
+  @DataSet(value = "test-yml/book.yml")
+  @ExpectedDataSet(value = "test-yml/book.yml")
+  void ID指定で検索ができる場合() throws Exception {
+    // setup
+   BookEntity expected = new BookEntity(1, "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+
+    // execute
+    BookEntity actual = sut.findById("1");
+
+    // assert
+    assertThat(actual).isEqualTo(expected);
+  }
 }
