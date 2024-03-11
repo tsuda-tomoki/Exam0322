@@ -1,6 +1,7 @@
 package org.example.infrastructure;
 
 import java.util.List;
+import java.util.Optional;
 import org.example.domain.Book;
 import org.example.domain.entity.BookEntity;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,6 +43,22 @@ class BookRepositoryImplTest {
 
     // execute
     List<Book> actual = sut.findAll();
+
+    // assert
+    assertThat(actual).isEqualTo(expected);
+  }
+
+  @Test
+  void ID検索ができる場合() {
+    // setup
+    BookEntity bookEntity = new BookEntity(1, "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+
+    Optional<Book> expected = Optional.of(new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080));
+
+    when(bookMapper.findById(bookEntity.id())).thenReturn(bookEntity);
+
+    // execute
+    Optional<Book> actual = sut.findById("1");
 
     // assert
     assertThat(actual).isEqualTo(expected);
