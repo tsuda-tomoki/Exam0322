@@ -18,4 +18,12 @@ public interface BookMapper {
    */
   @Select("SELECT id, title, author, publisher, price FROM books")
   List<BookEntity> findAll();
+
+  /**
+   * 指定されたIDの本情報を取得します.
+   *
+   * @return 指定された本情報
+   */
+  @Select("SELECT id, title, author, publisher, price FROM books WHERE id = #{id}")
+  BookEntity findById(Integer id);
 }

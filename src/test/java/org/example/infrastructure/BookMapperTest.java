@@ -60,7 +60,7 @@ class BookMapperTest {
    BookEntity expected = new BookEntity(1, "テスト駆動開発", "Kent Beck", "オーム社", 3080);
 
     // execute
-    BookEntity actual = sut.findById("1");
+    BookEntity actual = sut.findById(1);
 
     // assert
     assertThat(actual).isEqualTo(expected);
