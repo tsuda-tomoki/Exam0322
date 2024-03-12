@@ -1,7 +1,9 @@
 package org.example.infrastructure;
 
 import java.util.List;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.example.domain.entity.BookEntity;
 
@@ -26,4 +28,14 @@ public interface BookMapper {
    */
   @Select("SELECT id, title, author, publisher, price FROM books WHERE id = #{id}")
   BookEntity findById(Integer id);
+
+  /**
+   * 本情報を新規登録します.
+   *
+   * @param bookEntity 登録する本エンティティ
+   * @return 登録した本情報の件数
+   */
+  @Insert("INSERT INTO books (id, title, author, publisher, price)"
+      + "VALUES(#{id}, #{title}, #{author}, #{publisher}, #{price})")
+  Integer insert(BookEntity bookEntity);
 }
