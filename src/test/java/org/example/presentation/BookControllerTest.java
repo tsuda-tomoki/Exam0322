@@ -2,9 +2,8 @@ package org.example.presentation;
 
 import java.util.List;
 import org.example.domain.Book;
-import org.example.presentation.response.AllBooksResponse;
-import org.example.presentation.response.BookResponse;
 import org.example.usecase.GetAllBooksUseCase;
+import org.example.usecase.GetIdBookUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -30,6 +29,9 @@ class BookControllerTest {
   @MockBean
   private GetAllBooksUseCase getAllBooksUseCase;
 
+  @MockBean
+  private GetIdBookUseCase getIdBookUseCase;
+
   @BeforeEach
   void setUp() {
     MockitoAnnotations.openMocks(this);
@@ -45,15 +47,27 @@ class BookControllerTest {
   @Test
   void GETでエンドポイントにbooksが指定された場合全件検索が実行される() throws Exception {
     // setup
-    List<Book> expected = List.of(
+    List<Book> bookList = List.of(
         new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080),
         new Book("2", "アジャイルサムライ", "Jonathan Rasmusson", "オーム社", 2860)
     );
 
-    doReturn(expected).when(getAllBooksUseCase).findAll();
+    doReturn(bookList).when(getAllBooksUseCase).findAll();
 
     mockMvc.perform(get("/v1/books"))
         .andExpect(status().isOk())
         .andExpect(content().json(readFrom("test-json/AllBooks.json")));
+  }
+
+  @Test
+  void GETでエンドポイントにIDが指定された場合ID検索が実行される() throws Exception {
+    // setup
+    Book book = new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+
+    doReturn(book).when(getIdBookUseCase).findById("1");
+
+    mockMvc.perform(get("/v1/books/1"))
+        .andExpect(status().isOk())
+        .andExpect(content().json(readFrom("test-json/IdBook.json")));
   }
 }
