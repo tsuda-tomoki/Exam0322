@@ -65,4 +65,18 @@ class BookMapperTest {
     // assert
     assertThat(actual).isEqualTo(expected);
   }
+
+  @Test
+  @DataSet(value = "test-yml/book.yml")
+  @ExpectedDataSet(value = "test-yml/two-books.yml")
+  void 追加ができる場合() throws Exception {
+    // setup
+    BookEntity bookEntity = new BookEntity(2, "アジャイルサムライ", "Jonathan Rasmusson", "オーム社", 2860);
+
+    // execute
+    Integer actual = sut.insert(bookEntity);
+
+    // assert
+    assertThat(actual).isEqualTo(1);
+  }
 }
