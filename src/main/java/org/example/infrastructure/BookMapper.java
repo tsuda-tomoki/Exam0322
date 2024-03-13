@@ -38,4 +38,13 @@ public interface BookMapper {
   @Insert("INSERT INTO books (id, title, author, publisher, price)"
       + "VALUES(#{id}, #{title}, #{author}, #{publisher}, #{price})")
   Integer insert(BookEntity bookEntity);
+
+  /**
+   * 次の本情報IDを取得します.
+   *
+   * @return 次のID
+   */
+  @Select("SELECT nextval('BOOK_ID_SEQ')")
+  @Options(flushCache = Options.FlushCachePolicy.TRUE)
+  Long getNextId();
 }
