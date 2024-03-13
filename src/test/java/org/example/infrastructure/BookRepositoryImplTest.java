@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.Mockito.when;
 
 class BookRepositoryImplTest {
@@ -62,5 +63,19 @@ class BookRepositoryImplTest {
 
     // assert
     assertThat(actual).isEqualTo(expected);
+  }
+
+  @Test
+  void 追加ができる場合() {
+    // setup
+    BookEntity bookEntity = new BookEntity(1, "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+
+    Book book = new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+
+    when(bookMapper.insert(bookEntity)).thenReturn(1);
+
+    // execute & assert
+    assertThatCode(() -> sut.insert(book))
+        .doesNotThrowAnyException();
   }
 }
