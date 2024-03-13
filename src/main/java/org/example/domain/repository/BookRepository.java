@@ -22,4 +22,12 @@ public interface BookRepository {
    * @return 指定されたIDの本情報
    */
   Optional<Book> findById(String id);
+
+  /**
+   * 新規の本情報を追加します.
+   *
+   * @param book 追加する本情報
+   * @return 追加される本情報
+   */
+  Book insert(Book book);
 }

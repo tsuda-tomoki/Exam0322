@@ -11,8 +11,7 @@ import org.example.domain.repository.BookRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * BookRepository の実装クラス.
- * booksデータベースにアクセスします.
+ * BookRepository の実装クラス. booksデータベースにアクセスします.
  */
 @RequiredArgsConstructor
 @Repository
@@ -37,5 +36,13 @@ public class BookRepositoryImpl implements BookRepository {
       return Optional.empty();
     }
     return Optional.of(bookMapper.findById(Integer.parseInt(id)).convert());
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Book insert(Book book) {
+    return book;
   }
 }
