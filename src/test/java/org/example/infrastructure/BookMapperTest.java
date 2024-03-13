@@ -79,4 +79,13 @@ class BookMapperTest {
     // assert
     assertThat(actual).isEqualTo(1);
   }
+
+  @Test
+  void 次に追加予定の本情報のIDを取得できる場合() throws Exception {
+    // execute
+    Long actual = sut.getNextId();
+
+    // assert
+    assertThat(actual).isEqualTo(5);
+  }
 }
