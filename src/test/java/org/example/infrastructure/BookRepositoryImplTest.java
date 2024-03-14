@@ -78,4 +78,14 @@ class BookRepositoryImplTest {
     assertThatCode(() -> sut.insert(book))
         .doesNotThrowAnyException();
   }
+
+  @Test
+  void 追加予定のIDが取得できる場合() {
+    // setup
+    when(bookMapper.getNextId()).thenReturn(5L);
+
+    // execute & assert
+    assertThatCode(() -> sut.getNextId())
+        .doesNotThrowAnyException();
+  }
 }
