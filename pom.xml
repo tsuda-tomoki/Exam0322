@@ -22,6 +22,7 @@
     <junit-jupiter.version>5.10.1</junit-jupiter.version>
     <spring-boot-starter-validation.version>3.2.1</spring-boot-starter-validation.version>
     <lombok.version>1.18.30</lombok.version>
+    <spring-boot-starter-validation.version>3.2.3</spring-boot-starter-validation.version>
     <flywaydb.version>9.22.3</flywaydb.version>
     <testcontainers.version>1.19.1</testcontainers.version>
     <database-rider.version>1.41.0</database-rider.version>
@@ -72,6 +73,12 @@
       <artifactId>lombok</artifactId>
       <version>${lombok.version}</version>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+      <version>${spring-boot-starter-validation.version}</version>
     </dependency>
 
     <dependency>
