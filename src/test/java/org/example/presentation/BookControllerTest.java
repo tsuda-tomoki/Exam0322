@@ -4,6 +4,8 @@ import java.util.List;
 import org.example.domain.Book;
 import org.example.usecase.GetAllBooksUseCase;
 import org.example.usecase.GetIdBookUseCase;
+import org.example.usecase.InsertBookUseCase;
+import org.example.usecase.param.InsertBookParam;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -11,11 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.example.TestUtils.readFrom;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -31,6 +36,9 @@ class BookControllerTest {
 
   @MockBean
   private GetIdBookUseCase getIdBookUseCase;
+
+  @MockBean
+  private InsertBookUseCase insertBookUseCase;
 
   @BeforeEach
   void setUp() {
@@ -69,5 +77,20 @@ class BookControllerTest {
     mockMvc.perform(get("/v1/books/1"))
         .andExpect(status().isOk())
         .andExpect(content().json(readFrom("test-json/IdBook.json")));
+  }
+
+  @Test
+  void POSTでエンドポイントにemployeesが指定された場合追加が実行される() throws Exception {
+    // setup
+    Book book = new Book("5", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640);
+
+    InsertBookParam insertBookParam = new InsertBookParam("Clean Agile", "Robert C. Martin", "ドワンゴ", 2640);
+
+    doReturn(book).when(insertBookUseCase).insert(insertBookParam);
+
+    mockMvc.perform(post("/v1/books")
+            .content(readFrom("test-json/postBook.json"))
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isCreated());
   }
 }
