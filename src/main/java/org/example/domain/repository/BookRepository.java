@@ -30,4 +30,11 @@ public interface BookRepository {
    * @return 追加される本情報
    */
   Book insert(Book book);
+
+  /**
+   * 新規で追加予定のIDを取得します.
+   *
+   * @return 追加予定のID
+   */
+  Long getNextId();
 }

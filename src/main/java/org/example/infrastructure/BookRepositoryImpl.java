@@ -45,4 +45,12 @@ public class BookRepositoryImpl implements BookRepository {
   public Book insert(Book book) {
     return book;
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Long getNextId() {
+    return bookMapper.getNextId();
+  }
 }
