@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.example.domain.Book;
 import org.example.domain.entity.BookEntity;
+import org.example.infrastructure.exception.SqlFailException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -12,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 class BookRepositoryImplTest {
@@ -77,6 +79,21 @@ class BookRepositoryImplTest {
     // execute & assert
     assertThatCode(() -> sut.insert(book))
         .doesNotThrowAnyException();
+  }
+
+  @Test
+  void 追加が失敗したときに例外がスローされる場合() {
+    // setup
+    BookEntity bookEntity = new BookEntity(1, "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+
+    Book book = new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+
+    when(bookMapper.insert(bookEntity)).thenReturn(2);
+
+    // assert & execute
+    assertThatThrownBy(() -> sut.insert(book))
+        .isInstanceOf(SqlFailException.class)
+        .hasMessageContaining("SQLの実行時にエラーが発生しました。");
   }
 
   @Test
