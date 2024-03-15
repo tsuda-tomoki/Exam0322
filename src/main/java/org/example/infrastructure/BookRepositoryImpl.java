@@ -5,14 +5,17 @@ import static java.util.Objects.isNull;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.domain.Book;
 import org.example.domain.entity.BookEntity;
 import org.example.domain.repository.BookRepository;
+import org.example.infrastructure.exception.SqlFailException;
 import org.springframework.stereotype.Repository;
 
 /**
  * BookRepository の実装クラス. booksデータベースにアクセスします.
  */
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class BookRepositoryImpl implements BookRepository {
@@ -43,6 +46,19 @@ public class BookRepositoryImpl implements BookRepository {
    */
   @Override
   public Book insert(Book book) {
+    Integer createNum = bookMapper.insert(
+        new BookEntity(
+            Integer.parseInt(book.id()),
+            book.title(),
+            book.author(),
+            book.publisher(),
+            book.price()));
+
+    if (createNum != 1) {
+      log.error("SQLの実行時にエラーが発生しました。");
+      throw new SqlFailException("SQLの実行時にエラーが発生しました。");
+    }
+
     return book;
   }
 
