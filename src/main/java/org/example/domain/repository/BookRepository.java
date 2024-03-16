@@ -37,4 +37,11 @@ public interface BookRepository {
    * @return 追加予定のID
    */
   Long getNextId();
+
+  /**
+   * 本情報を更新します.
+   *
+   * @param book 更新する本情報
+   */
+  void update(Book book);
 }

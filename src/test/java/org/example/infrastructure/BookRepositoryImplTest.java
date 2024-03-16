@@ -105,4 +105,17 @@ class BookRepositoryImplTest {
     assertThatCode(() -> sut.getNextId())
         .doesNotThrowAnyException();
   }
+
+  @Test
+  void 更新ができる場合() {
+    // setup
+    BookEntity bookEntity = new BookEntity(1, "テスト駆動開発", "Uncle Bob", "オーム社", 3080);
+
+    Book book = new Book("1", "テスト駆動開発", "Uncle Bob", "オーム社", 3080);
+
+    when(bookMapper.update(bookEntity)).thenReturn(1);
+
+    // execute & assert
+    assertThatCode(() -> sut.update(book)).doesNotThrowAnyException();
+  }
 }
