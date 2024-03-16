@@ -54,9 +54,8 @@ public class BookRepositoryImpl implements BookRepository {
             book.publisher(),
             book.price()));
 
-    if (createNum != 1) {
-      log.error("SQLの実行時にエラーが発生しました。");
-      throw new SqlFailException("SQLの実行時にエラーが発生しました。");
+    if (failSqlcheck(createNum)) {
+      handleSqlFailException();
     }
 
     return book;
@@ -68,5 +67,32 @@ public class BookRepositoryImpl implements BookRepository {
   @Override
   public Long getNextId() {
     return bookMapper.getNextId();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void update(Book book) {
+    Integer updateNum = bookMapper.update(
+        new BookEntity(
+            Integer.parseInt(book.id()),
+            book.title(),
+            book.author(),
+            book.publisher(),
+            book.price()));
+
+    if (failSqlcheck(updateNum)) {
+      handleSqlFailException();
+    }
+  }
+
+  private boolean failSqlcheck(Integer num) {
+    return num != 1;
+  }
+
+  private void handleSqlFailException() {
+    log.error("SQLの実行時にエラーが発生しました。");
+    throw new SqlFailException("SQLの実行時にエラーが発生しました。");
   }
 }
