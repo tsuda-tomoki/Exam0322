@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.example.domain.entity.BookEntity;
 
 /**
@@ -47,4 +48,14 @@ public interface BookMapper {
   @Select("SELECT nextval('BOOK_ID_SEQ')")
   @Options(flushCache = Options.FlushCachePolicy.TRUE)
   Long getNextId();
+
+  /**
+   * 本情報を更新します.
+   *
+   * @param bookEntity 更新する本エンティティ
+   * @return 更新した本情報の件数
+   */
+  @Update("UPDATE books SET title = #{title}, author = #{author},"
+      + "publisher = #{publisher}, price = #{price} WHERE id = #{id}")
+  Integer update(BookEntity bookEntity);
 }
