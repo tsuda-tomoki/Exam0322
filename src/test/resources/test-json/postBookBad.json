@@ -1,0 +1,7 @@
+{
+  "code": "0001",
+  "message": "request validation error is occurred.",
+  "details": [
+    "title must not be blank"
+  ]
+}
