@@ -45,7 +45,8 @@ public class BookController {
    */
   @GetMapping("/")
   @ResponseStatus(HttpStatus.OK)
-  public void accessToRoute() {
+  public ResponseEntity<String> access() {
+    return ResponseEntity.ok("Success! You've accessed the root URL of /v1/employees.");
   }
 
   /**
