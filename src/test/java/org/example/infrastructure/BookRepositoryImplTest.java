@@ -118,4 +118,13 @@ class BookRepositoryImplTest {
     // execute & assert
     assertThatCode(() -> sut.update(book)).doesNotThrowAnyException();
   }
+
+  @Test
+  void 削除ができる場合() {
+    // setup
+    when(bookMapper.delete(1)).thenReturn(1);
+
+    // execute & assert
+    assertThatCode(() -> sut.delete("1")).doesNotThrowAnyException();
+  }
 }
