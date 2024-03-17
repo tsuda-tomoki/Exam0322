@@ -3,11 +3,11 @@ package org.example.common;
 import org.example.domain.Book;
 import org.example.infrastructure.BookMapper;
 import org.example.infrastructure.BookRepositoryImpl;
+import org.example.usecase.DeleteBookUseCase;
 import org.example.usecase.GetAllBooksUseCase;
 import org.example.usecase.GetIdBookUseCase;
 import org.example.usecase.InsertBookUseCase;
 import org.example.usecase.UpdateBookUseCase;
-import org.example.usecase.param.UpdateBookParam;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.example.TestUtils.readFrom;
 import static org.mockito.Mockito.doReturn;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -42,6 +41,9 @@ class GlobalExceptionHandlerTest {
 
   @MockBean
   private UpdateBookUseCase updateBookUseCase;
+
+  @MockBean
+  private DeleteBookUseCase deleteBookUseCase;
 
   @MockBean
   private BookRepositoryImpl bookRepository;

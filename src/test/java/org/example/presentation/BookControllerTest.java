@@ -59,7 +59,8 @@ class BookControllerTest {
   void ルートURLにアクセスしたとき() throws Exception {
     // assert
     mockMvc.perform(get("/"))
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andExpect(content().string("Success! You've accessed the root URL of /v1/employees."));
   }
 
   @Test
