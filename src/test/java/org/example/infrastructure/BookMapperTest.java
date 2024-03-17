@@ -102,4 +102,15 @@ class BookMapperTest {
     // assert
     assertThat(actual).isEqualTo(1);
   }
+
+  @Test
+  @DataSet(value = "test-yml/two-books.yml")
+  @ExpectedDataSet(value = "test-yml/book.yml")
+  void 削除ができる場合() throws Exception {
+    // execute
+    Integer actual = sut.delete(2);
+
+    // assert
+    assertThat(actual).isEqualTo(1);
+  }
 }
