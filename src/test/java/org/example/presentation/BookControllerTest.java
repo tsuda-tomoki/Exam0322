@@ -2,10 +2,13 @@ package org.example.presentation;
 
 import java.util.List;
 import org.example.domain.Book;
+import org.example.presentation.request.UpdateBookRequest;
 import org.example.usecase.GetAllBooksUseCase;
 import org.example.usecase.GetIdBookUseCase;
 import org.example.usecase.InsertBookUseCase;
+import org.example.usecase.UpdateBookUseCase;
 import org.example.usecase.param.InsertBookParam;
+import org.example.usecase.param.UpdateBookParam;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -14,10 +17,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.example.TestUtils.readFrom;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,6 +42,9 @@ class BookControllerTest {
 
   @MockBean
   private InsertBookUseCase insertBookUseCase;
+
+  @MockBean
+  private UpdateBookUseCase updateBookUseCase;
 
   @BeforeEach
   void setUp() {
@@ -77,7 +86,7 @@ class BookControllerTest {
   }
 
   @Test
-  void POSTでエンドポイントにemployeesが指定された場合追加が実行される() throws Exception {
+  void POSTでエンドポイントにbooksが指定された場合追加が実行される() throws Exception {
     // setup
     Book book = new Book("5", "Clean Agile", "Robert C. Martin", "ドワンゴ", 2640);
 
@@ -89,5 +98,19 @@ class BookControllerTest {
             .content(readFrom("test-json/postBook.json"))
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isCreated());
+  }
+
+  @Test
+  void PATCHでエンドポイントにidが指定された場合指定のidの本情報が更新される() throws Exception {
+    // setup
+    UpdateBookParam updateBookParam = new UpdateBookParam("1", null, null, "Uncle Bob", null);
+
+    doNothing().when(updateBookUseCase).update(updateBookParam);
+
+    // assert
+    mockMvc.perform(patch("/v1/books/1")
+            .content(readFrom("test-json/patchBook.json"))
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(MockMvcResultMatchers.status().isNoContent());
   }
 }
