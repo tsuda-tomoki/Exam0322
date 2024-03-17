@@ -6,6 +6,8 @@ import org.example.infrastructure.BookRepositoryImpl;
 import org.example.usecase.GetAllBooksUseCase;
 import org.example.usecase.GetIdBookUseCase;
 import org.example.usecase.InsertBookUseCase;
+import org.example.usecase.UpdateBookUseCase;
+import org.example.usecase.param.UpdateBookParam;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -17,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.example.TestUtils.readFrom;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,6 +41,9 @@ class GlobalExceptionHandlerTest {
   private InsertBookUseCase insertBookUseCase;
 
   @MockBean
+  private UpdateBookUseCase updateBookUseCase;
+
+  @MockBean
   private BookRepositoryImpl bookRepository;
 
   @BeforeEach
@@ -55,6 +61,22 @@ class GlobalExceptionHandlerTest {
     // assert & execute
     mockMvc.perform(post("/v1/books")
             .content(readFrom("test-json/postBookBad.json"))
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void NotBookFoundExceptionがスローされた場合() throws Exception {
+    // setup
+    Book book = new Book("4", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+
+    UpdateBookParam updateBookParam = new UpdateBookParam("4", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+
+    doReturn(book).when(updateBookUseCase).update(updateBookParam);
+
+    // assert & execute
+    mockMvc.perform(patch("/v1/books/1")
+            .content(readFrom("test-json/notFoundBookException.json"))
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isBadRequest());
   }
