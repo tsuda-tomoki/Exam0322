@@ -2,7 +2,7 @@ package org.example.presentation;
 
 import java.util.List;
 import org.example.domain.Book;
-import org.example.presentation.request.UpdateBookRequest;
+import org.example.usecase.DeleteBookUseCase;
 import org.example.usecase.GetAllBooksUseCase;
 import org.example.usecase.GetIdBookUseCase;
 import org.example.usecase.InsertBookUseCase;
@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import static org.example.TestUtils.readFrom;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -45,6 +46,9 @@ class BookControllerTest {
 
   @MockBean
   private UpdateBookUseCase updateBookUseCase;
+
+  @MockBean
+  private DeleteBookUseCase deleteBookUseCase;
 
   @BeforeEach
   void setUp() {
@@ -112,5 +116,15 @@ class BookControllerTest {
             .content(readFrom("test-json/patchBook.json"))
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isNoContent());
+  }
+
+  @Test
+  void DELETEでエンドポイントにidが指定されたときそれを削除する() throws Exception {
+    // setup
+    doNothing().when(deleteBookUseCase).delete("1");
+
+    // assert
+    mockMvc.perform(delete("/v1/books/1")
+    ).andExpect(status().isNoContent());
   }
 }
