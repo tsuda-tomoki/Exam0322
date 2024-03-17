@@ -54,7 +54,7 @@ public class BookRepositoryImpl implements BookRepository {
             book.publisher(),
             book.price()));
 
-    if (failSqlcheck(createNum)) {
+    if (failSqlCheck(createNum)) {
       handleSqlFailException();
     }
 
@@ -82,12 +82,21 @@ public class BookRepositoryImpl implements BookRepository {
             book.publisher(),
             book.price()));
 
-    if (failSqlcheck(updateNum)) {
+    if (failSqlCheck(updateNum)) {
       handleSqlFailException();
     }
   }
 
-  private boolean failSqlcheck(Integer num) {
+  @Override
+  public void delete(String id) {
+    Integer deleteNum = bookMapper.delete(Integer.parseInt(id));
+
+    if (failSqlCheck(deleteNum)) {
+      handleSqlFailException();
+    }
+  }
+
+  private boolean failSqlCheck(Integer num) {
     return num != 1;
   }
 

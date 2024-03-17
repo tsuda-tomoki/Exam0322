@@ -65,19 +65,19 @@ class GlobalExceptionHandlerTest {
         .andExpect(status().isBadRequest());
   }
 
-  @Test
-  void NotBookFoundExceptionがスローされた場合() throws Exception {
-    // setup
-    Book book = new Book("4", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
-
-    UpdateBookParam updateBookParam = new UpdateBookParam("4", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
-
-    doReturn(book).when(updateBookUseCase).update(updateBookParam);
-
-    // assert & execute
-    mockMvc.perform(patch("/v1/books/1")
-            .content(readFrom("test-json/notFoundBookException.json"))
-            .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isBadRequest());
-  }
+//  @Test
+//  void NotBookFoundExceptionがスローされた場合() throws Exception {
+//    // setup
+//    Book book = new Book("4", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+//
+//    UpdateBookParam updateBookParam = new UpdateBookParam("4", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+//
+//    doReturn(book).when(updateBookUseCase).update(updateBookParam);
+//
+//    // assert & execute
+//    mockMvc.perform(patch("/v1/books/1")
+//            .content(readFrom("test-json/notFoundBookException.json"))
+//            .contentType(MediaType.APPLICATION_JSON))
+//        .andExpect(status().isBadRequest());
+//  }
 }

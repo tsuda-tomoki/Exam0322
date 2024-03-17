@@ -44,4 +44,11 @@ public interface BookRepository {
    * @param book 更新する本情報
    */
   void update(Book book);
+
+  /**
+   * 本情報を削除します.
+   *
+   * @param id 削除する本情報のID
+   */
+  void delete(String id);
 }
