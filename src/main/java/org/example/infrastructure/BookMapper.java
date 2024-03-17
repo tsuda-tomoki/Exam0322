@@ -1,6 +1,7 @@
 package org.example.infrastructure;
 
 import java.util.List;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -58,4 +59,13 @@ public interface BookMapper {
   @Update("UPDATE books SET title = #{title}, author = #{author},"
       + "publisher = #{publisher}, price = #{price} WHERE id = #{id}")
   Integer update(BookEntity bookEntity);
+
+  /**
+   * 本情報を削除します.
+   *
+   * @param id 削除する本ID
+   * @return 削除する本情報の件数
+   */
+  @Delete("DELETE FROM books WHERE id = #{id}")
+  Integer delete(Integer id);
 }
