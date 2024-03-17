@@ -13,7 +13,7 @@ import org.example.infrastructure.exception.SqlFailException;
 import org.springframework.stereotype.Repository;
 
 /**
- * BookRepository の実装クラス. booksデータベースにアクセスします.
+ * BookRepositoryの実装クラス. booksデータベースにアクセスします.
  */
 @Slf4j
 @RequiredArgsConstructor

@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.example.domain.Book;
 
 /**
- * books テーブルにアクセスするためのリポジトリ.
+ * booksテーブルにアクセスするためのリポジトリ.
  */
 public interface BookRepository {
 
