@@ -4,6 +4,7 @@ import static java.util.Collections.emptyList;
 
 import org.example.infrastructure.exception.SqlFailException;
 import org.example.presentation.response.ErrorResponse;
+import org.example.usecase.exception.NotBookFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -27,6 +28,22 @@ public class GlobalExceptionHandler {
     return new ErrorResponse(
         "0004",
         e.getMessage(),
+        emptyList()
+    );
+  }
+
+  /**
+   * ID検索時に失敗した場合にスローされる例外のハンドリングメソッドです.
+   *
+   * @param e ID検索時にスローされる例外
+   * @return エラーレスポンス
+   */
+  @ExceptionHandler(NotBookFoundException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ErrorResponse handleNotBookFoundException(NotBookFoundException e) {
+    return new ErrorResponse(
+        "0003",
+        String.format("specified book [id = %s] is not found.", e.getId()),
         emptyList()
     );
   }
