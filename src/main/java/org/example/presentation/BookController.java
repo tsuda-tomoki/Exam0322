@@ -7,6 +7,7 @@ import org.example.presentation.request.InsertBookRequest;
 import org.example.presentation.request.UpdateBookRequest;
 import org.example.presentation.response.AllBooksResponse;
 import org.example.presentation.response.BookResponse;
+import org.example.usecase.DeleteBookUseCase;
 import org.example.usecase.GetAllBooksUseCase;
 import org.example.usecase.GetIdBookUseCase;
 import org.example.usecase.InsertBookUseCase;
@@ -16,6 +17,7 @@ import org.example.usecase.param.UpdateBookParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +38,7 @@ public class BookController {
   private final GetIdBookUseCase getIdBookUseCase;
   private final InsertBookUseCase insertBookUseCase;
   private final UpdateBookUseCase updateBookUseCase;
+  private final DeleteBookUseCase deleteBookUseCase;
 
   /**
    * ルートURLへのリクエストを処理します.
@@ -112,5 +115,16 @@ public class BookController {
         updateEmployeeRequest.author(),
         updateEmployeeRequest.publisher(),
         updateEmployeeRequest.price()));
+  }
+
+  /**
+   * ID指定で本情報を削除します.
+   *
+   * @param id 削除する本のID
+   */
+  @DeleteMapping("/v1/books/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable String id) {
+    deleteBookUseCase.delete(id);
   }
 }
