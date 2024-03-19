@@ -31,6 +31,11 @@
 
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     <maven-surefire-plugin.version>3.2.2</maven-surefire-plugin.version>
+
+    <sonar.exclusions>
+      src/main/java/org/example/StartApplication.java
+    </sonar.exclusions>
+
   </properties>
 
   <dependencyManagement>

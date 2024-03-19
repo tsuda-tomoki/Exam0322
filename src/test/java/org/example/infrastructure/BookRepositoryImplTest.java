@@ -68,6 +68,23 @@ class BookRepositoryImplTest {
   }
 
   @Test
+  void 検索したIDが存在しない場合() {
+    // setup
+    BookEntity bookEntity = new BookEntity(999, "a", "a", "a", 3);
+
+    Optional<Book> expected = Optional.empty();
+
+    when(bookMapper.findById(bookEntity.id())).thenReturn(bookEntity);
+
+    // execute
+    Optional<Book> actual = sut.findById("1");
+
+    // assert
+    assertThat(actual).isEqualTo(expected);
+  }
+
+
+  @Test
   void 追加ができる場合() {
     // setup
     BookEntity bookEntity = new BookEntity(1, "テスト駆動開発", "Kent Beck", "オーム社", 3080);
@@ -120,11 +137,38 @@ class BookRepositoryImplTest {
   }
 
   @Test
+  void 更新が失敗したときに例外がスローされる場合() {
+    // setup
+    BookEntity bookEntity = new BookEntity(1, "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+
+    Book book = new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+
+    when(bookMapper.insert(bookEntity)).thenReturn(2);
+
+    // assert & execute
+    assertThatThrownBy(() -> sut.update(book))
+        .isInstanceOf(SqlFailException.class)
+        .hasMessageContaining("SQLの実行時にエラーが発生しました。");
+  }
+
+
+  @Test
   void 削除ができる場合() {
     // setup
     when(bookMapper.delete(1)).thenReturn(1);
 
     // execute & assert
     assertThatCode(() -> sut.delete("1")).doesNotThrowAnyException();
+  }
+
+  @Test
+  void 削除が失敗したときに例外がスローされる場合() {
+    // setup
+    when(bookMapper.delete(1)).thenReturn(0);
+
+    // assert & execute
+    assertThatThrownBy(() -> sut.delete("1"))
+        .isInstanceOf(SqlFailException.class)
+        .hasMessageContaining("SQLの実行時にエラーが発生しました。");
   }
 }

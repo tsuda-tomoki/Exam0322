@@ -1,13 +1,18 @@
 package org.example.common;
 
+import java.util.Optional;
 import org.example.domain.Book;
+import org.example.domain.entity.BookEntity;
 import org.example.infrastructure.BookMapper;
 import org.example.infrastructure.BookRepositoryImpl;
+import org.example.infrastructure.exception.SqlFailException;
 import org.example.usecase.DeleteBookUseCase;
 import org.example.usecase.GetAllBooksUseCase;
 import org.example.usecase.GetIdBookUseCase;
 import org.example.usecase.InsertBookUseCase;
 import org.example.usecase.UpdateBookUseCase;
+import org.example.usecase.exception.NotBookFoundException;
+import org.example.usecase.param.UpdateBookParam;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -19,9 +24,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.example.TestUtils.readFrom;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -58,17 +65,15 @@ class GlobalExceptionHandlerTest {
 
   @Test
   void SqlFailExceptionがスローされた場合() throws Exception {
-    // setup
+// setup
     Book book = new Book("1", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
 
-    doReturn(book).when(bookRepository).insert(book);
-
+    when(bookRepository.insert(book)).thenThrow(new SqlFailException("") {});
     // assert & execute
     mockMvc.perform(post("/v1/books")
             .content(readFrom("test-json/postBookBad.json"))
             .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isBadRequest());
-  }
+        .andExpect(status().isBadRequest());  }
 
   @Test
   void DataAccessExceptionがスローされた場合() throws Exception {
@@ -83,6 +88,18 @@ class GlobalExceptionHandlerTest {
   }
 
   @Test
+  void NotBookFoundExceptionがスローされた場合() throws Exception {
+    // setup
+    when(getIdBookUseCase.findById("1")).thenThrow(new NotBookFoundException("") {});
+
+    // assert & execute
+    mockMvc.perform(get("/v1/books/1")
+            .content(readFrom("test-json/notFoundBookException.json"))
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
   void 予期せぬ例外がスローされた場合() throws Exception {
     // setup
     when(getAllBooksUseCase.findAll()).thenThrow(new RuntimeException("") {});
@@ -94,19 +111,3 @@ class GlobalExceptionHandlerTest {
         .andExpect(status().isInternalServerError());
   }
 }
-
-//  @Test
-//  void NotBookFoundExceptionがスローされた場合() throws Exception {
-//    // setup
-//    Book book = new Book("4", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
-//
-//    UpdateBookParam updateBookParam = new UpdateBookParam("4", "テスト駆動開発", "Kent Beck", "オーム社", 3080);
-//
-//    doReturn(book).when(updateBookUseCase).update(updateBookParam);
-//
-//    // assert & execute
-//    mockMvc.perform(patch("/v1/books/1")
-//            .content(readFrom("test-json/notFoundBookException.json"))
-//            .contentType(MediaType.APPLICATION_JSON))
-//        .andExpect(status().isBadRequest());
-//  }
