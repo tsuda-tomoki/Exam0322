@@ -1,8 +1,5 @@
 package org.example.usecase;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.mockito.Mockito.doReturn;
-
 import org.example.domain.Book;
 import org.example.domain.repository.BookRepository;
 import org.example.usecase.param.InsertBookParam;
@@ -11,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.mockito.Mockito.doReturn;
 
 class InsertBookUseCaseTest {
 

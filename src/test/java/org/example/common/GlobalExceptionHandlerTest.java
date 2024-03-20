@@ -1,8 +1,6 @@
 package org.example.common;
 
-import java.util.Optional;
 import org.example.domain.Book;
-import org.example.domain.entity.BookEntity;
 import org.example.infrastructure.BookMapper;
 import org.example.infrastructure.BookRepositoryImpl;
 import org.example.infrastructure.exception.SqlFailException;
@@ -12,7 +10,6 @@ import org.example.usecase.GetIdBookUseCase;
 import org.example.usecase.InsertBookUseCase;
 import org.example.usecase.UpdateBookUseCase;
 import org.example.usecase.exception.NotBookFoundException;
-import org.example.usecase.param.UpdateBookParam;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -24,11 +21,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.example.TestUtils.readFrom;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
