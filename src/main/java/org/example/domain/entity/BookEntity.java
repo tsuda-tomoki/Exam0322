@@ -14,7 +14,7 @@ import org.example.domain.Book;
 public record BookEntity(Integer id, String title, String author, String publisher, Integer price) {
 
   /**
-   * 本の情報を表す Value Object に変換する.
+   * 本の情報を表す Value Object に変換します.
    *
    * @return 変換されたオブジェクト
    */

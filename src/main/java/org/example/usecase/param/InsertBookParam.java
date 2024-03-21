@@ -3,17 +3,17 @@ package org.example.usecase.param;
 import org.example.domain.Book;
 
 /**
- * 本情報を新規登録するためのデータを保持する.
+ * 本情報を新規登録するためのデータを保持するクラス.
  *
- * @param title     タイトル
- * @param author    著者
- * @param publisher 出版社
- * @param price     金額
+ * @param title     本のタイトル
+ * @param author    本の著者
+ * @param publisher 本の出版社
+ * @param price     本の金額
  */
 public record InsertBookParam(String title, String author, String publisher, Integer price) {
 
   /**
-   * 指定されたIDから本情報のオブジェクトを作成.
+   * 指定されたIDから本情報のオブジェクトを作成します.
    *
    * @param id 新規登録する本ID
    * @return Bookオブジェクト

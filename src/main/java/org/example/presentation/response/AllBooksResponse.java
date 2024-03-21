@@ -5,9 +5,9 @@ import java.util.List;
 import org.example.domain.Book;
 
 /**
- * すべての本の情報も持つレスポンスオブジェクト.
+ * すべての本の情報も持つレスポンスクラス.
  *
- * @param books 本の情報を持つレスポンスオブジェクトのリスト.
+ * @param books 本の情報を持つレスポンスオブジェクトのリスト
  */
 public record AllBooksResponse(List<BookResponse> books) {
 

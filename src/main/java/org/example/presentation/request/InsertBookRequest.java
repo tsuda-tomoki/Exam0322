@@ -9,10 +9,10 @@ import org.hibernate.validator.constraints.Length;
 /**
  * 新規の本情報をに送信するリクエストを表すクラス.
  *
- * @param title     タイトル
- * @param author    著者
- * @param publisher 出版社
- * @param price     金額
+ * @param title     本のタイトル
+ * @param author    本の著者
+ * @param publisher 本の出版社
+ * @param price     本の金額
  */
 public record InsertBookRequest(
     @NotBlank

@@ -5,12 +5,12 @@ import jakarta.validation.constraints.Min;
 import org.hibernate.validator.constraints.Length;
 
 /**
- * 本をを更新用リクエストを表すオブジェクト.
+ * 本をを更新用リクエストを表すクラス.
  *
- * @param title     タイトル
- * @param author    著者
- * @param publisher 出版社
- * @param price     金額
+ * @param title     本のタイトル
+ * @param author    本の著者
+ * @param publisher 本の出版社
+ * @param price     本の金額
  */
 public record UpdateBookRequest(
     @Length(max = 100)

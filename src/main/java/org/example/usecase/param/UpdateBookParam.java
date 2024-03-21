@@ -5,13 +5,13 @@ import static java.util.Objects.nonNull;
 import org.example.domain.Book;
 
 /**
- * 更新したい本情報を保持するオブジェクト.
+ * 更新したい本情報を保持するクラス.
  *
- * @param id        本ID
- * @param title     タイトル
- * @param author    著者
- * @param publisher 出版社
- * @param price     金額
+ * @param id        本のID
+ * @param title     本のタイトル
+ * @param author    本の著者
+ * @param publisher 本の出版社
+ * @param price     本の金額
  */
 public record UpdateBookParam(
     String id, String title, String author, String publisher, Integer price) {

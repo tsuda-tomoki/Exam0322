@@ -3,7 +3,7 @@ package org.example.presentation.response;
 import org.example.domain.Book;
 
 /**
- * 本の情報を表すレスポンスオブジェクト.
+ * 本の情報を表すレスポンスクラス.
  *
  * @param id        本のID
  * @param title     本のタイトル

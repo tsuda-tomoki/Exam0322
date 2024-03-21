@@ -87,6 +87,9 @@ public class BookRepositoryImpl implements BookRepository {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void delete(String id) {
     Integer deleteNum = bookMapper.delete(Integer.parseInt(id));
