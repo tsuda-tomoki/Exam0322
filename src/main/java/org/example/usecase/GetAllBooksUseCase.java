@@ -21,7 +21,6 @@ public class GetAllBooksUseCase {
    *
    * @return 本情報のリスト
    */
-  @Transactional(readOnly = true)
   public List<Book> findAll() {
     return bookRepository.findAll();
   }
